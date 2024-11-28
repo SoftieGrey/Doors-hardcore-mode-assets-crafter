@@ -444,7 +444,7 @@ function DamagePlayer(entityTable)
 				
 				-- Set death hints and type (thanks oogy)
 				if firesignal then
-					config.Jumpscare()
+					config.Entity.Jumpscare()
 					firesignal(remotesFolder.DeathHint.OnClientEvent, config.Death.Hints, colour)
 				else
 					warn("firesignal not supported, ignore death hints.")
@@ -674,17 +674,17 @@ spawner.Create = function(config)
 	if success and entityModel then
 		local root = entityModel.PrimaryPart or entityModel:FindFirstChildWhichIsA("BasePart")
 		if root then
-      if config.Attach then
+      if config.Entity.Attach then
         root:FindFirstChildOfClass("Attachment"):Destroy()
         config.Attach.Parent=root
       end
-      if config.AudioList then
+      if config.Entity.AudioList then
         for _, audio in ipairs(root:GetDescendants()) do
           if audio:IsA("Sound") then
             audio:Destroy()
           end
         end
-        for _, audio in ipairs(config.AudioList:GetChildren()) do
+        for _, audio in ipairs(config.Entity.AudioList:GetChildren()) do
           audio.Playing=true
           audio.Parent=root
         end
