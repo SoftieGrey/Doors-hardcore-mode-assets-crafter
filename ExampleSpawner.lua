@@ -1,9 +1,10 @@
 local utility = {}
-function utility:Spawn(Speed, Attach, Audio, Name, Dmg, Rb, E, CrossType, CrossFail, DeathType, Hints)
+function utility:Spawn(Speed, Attach, Audio, Name, Dmg, Rb, E, CrossType, CrossFail, DeathType, Hints, jmps)
   local Config = {
 	Entity = {
-    Attach = Attach or nil
-    AudioList = Audio or nil
+			Jumpscare=jmps
+    Attach = Attach or nil,
+    AudioList = Audio or nil,
 		Name = Name,
 		Asset = "https://github.com/RegularVynixu/Utilities/blob/main/Doors%20Entity%20Spawner/Models/Rush.rbxm?raw=true",
 		HeightOffset = 0
