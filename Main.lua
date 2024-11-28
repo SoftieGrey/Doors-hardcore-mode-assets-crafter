@@ -6,6 +6,75 @@ function download(url)
   end
   return getcustomasset(path)
 end
+function spawnItem(itemName)
+    ---====== Define spawner ======---
+
+local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Item%20Spawner/V1/Source.lua"))();
+
+---====== Create item ======---
+
+local tools = {
+		Crucifix=LoadCustomInstance("https://github.com/RegularVynixu/Utilities/raw/main/Doors/Item%20Spawner/Assets/Crucifix.rbxm");
+	}
+local handle = tools[itemName].Handle
+local size = handle.Size
+
+local offsets = {
+    flat_random = CFrame.Angles(math.rad(-90), 0, math.rad(math.random(-360, 360))) + Vector3.new(0, 0, size.Z / 2),
+    doorframe = CFrame.Angles(math.rad(-5), 0, 0) + Vector3.new(0, size.Y / 2, 0),
+    wall = CFrame.new(0, 0, -size.Z / 2)
+}
+
+local item = spawner.Create({
+    Item = {
+        Name = itemName,
+        Asset = tools[itemName],
+        DestroyOnPickup = true,
+        PickupOnTouch = false
+    },
+    Prompt = {
+        Range = 7,
+        Duration = 0,
+        LineOfSight = false
+    },
+    Locations = {
+        Dresser = {
+            Enabled = false
+        },
+        Drawer = {
+            Enabled = true, Offset = offsets.flat_random
+        },
+        Table = {
+            Enabled = true, Offset = offsets.flat_random
+        },
+        Chest = {
+            Enabled = true, Offset = offsets.flat_random
+        },
+        Bed = {
+            Enabled = false
+        },
+        Floor = {
+            Enabled = false
+        },
+        Fireplace = {
+            Enabled = false
+        },
+        Doorframe = {
+            Enabled = true, Offset = offsets.doorframe
+        },
+        Wall = {
+            Enabled = true, Offset = offsets.wall
+        }
+    }
+})
+
+---====== Spawn item ======---
+
+local currentRoomIndex = game:GetService("Players").LocalPlayer:GetAttribute("CurrentRoom") -- current room number index
+local currentRoom = workspace.CurrentRooms[currentRoomIndex] -- current room instance
+
+item:Spawn(currentRoom)
+end
 function quick()
   local jmpsImg=download("https://raw.githubusercontent.com/SoftieGrey/Doors-hardcore-mode-assets-crafter/refs/heads/main/beepquickbop.mp4")
   local image=download("https://raw.githubusercontent.com/SoftieGrey/Doors-hardcore-mode-assets-crafter/refs/heads/main/Uraveragerushclone.png")
@@ -60,11 +129,15 @@ function canEntitySpawn()
     return false
   end
 end
+local crosschance=30
 local ondoorchanged=game.ReplicatedStorage.GameData.LatestRoom
 ondoorchanged.Changed:Connect(function()
       for _, entity in ipairs(entityChances) do
           if math.random(1,100)<=entity.Chance and ondoorchanged.Value>=entity.Door then
                   entity.callback()
       end
+    end
+    if math.random(1,100)<=crosschance then
+      spawnItem("Crucifix")
     end
   end)
