@@ -1,15 +1,15 @@
 local utility = {}
-function utility:Spawn(Attach, Audio, Name, Dmg, Rb, E, CrossType, CrossFail, DeathThpe, Hints)
+function utility:Spawn(Speed, Attach, Audio, Name, Dmg, Rb, E, CrossType, CrossFail, DeathType, Hints)
   local Config = {
 	Entity = {
-    Attach = nil
-    AudioList = nil
-		Name = "Template Entity",
+    Attach = Attach or nil
+    AudioList = Audio or nil
+		Name = Name,
 		Asset = "https://github.com/RegularVynixu/Utilities/blob/main/Doors%20Entity%20Spawner/Models/Rush.rbxm?raw=true",
 		HeightOffset = 0
 	},
 	Movement = {
-		Speed = 100,
+		Speed = Speed*100,
 		Delay = 2,
 		Reversed = false
 	},
@@ -19,10 +19,10 @@ function utility:Spawn(Attach, Audio, Name, Dmg, Rb, E, CrossType, CrossFail, De
 		Amount = 125
 	},
 	Rebounding = {
-		Enabled = true,
+		Enabled = Rb~=nil and Rb[1]~=0 and Rb[2]~=0,
 		Type = "Ambush", -- "Blitz"
-		Min = 2,
-		Max = 4,
+		Min = Rb[1],
+		Max = Rb[2],
 		Delay = 2
 	},
 	Lights = {
@@ -34,7 +34,7 @@ function utility:Spawn(Attach, Audio, Name, Dmg, Rb, E, CrossType, CrossFail, De
 		Repair = false
 	},
 	Earthquake = {
-		Enabled = true
+		Enabled = E
 	},
 	CameraShake = {
 		Enabled = true,
@@ -42,15 +42,15 @@ function utility:Spawn(Attach, Audio, Name, Dmg, Rb, E, CrossType, CrossFail, De
 		Range = 100
 	},
 	Crucifixion = {
-		Type = "Curious", -- "Guiding"
+		Type = CrossType or "Guiding", -- "Guiding"
 		Enabled = true,
 		Range = 40,
 		Resist = false,
-		Break = true
+		Break = CrossFail
 	},
 	Death = {
-		Type = "Guiding", -- "Curious"
-		Hints = {"Death", "Hints", "Go", "Here"},
+		Type = DeathType or "Guiding", -- "Curious"
+		Hints = Hints,
         Cause = ""
 	}
 }
