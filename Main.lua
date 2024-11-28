@@ -106,7 +106,7 @@ function quick()
         "Guiding", --Crucifix Type ("Guiding" or "Curious")
         false, --Crucifix fails?
         "Guiding", --Death type ("Curious" or "Guiding")
-        {"You died to who you call Quick", "Listen for any cues that might hint it's arrival", "Find a hiding spot quickly! It's speed has been proved to be quite menacing", ""} --death messages
+        {"You died to who you call Quick", "Listen for any cues that might hint it's arrival", "Find a hiding spot quickly! It's speed has been proved to be quite menacing", ""}, --death messages
         function() --jumpscare
 	local videoFrame = Instance.new("VideoFrame")
     videoFrame.Parent =Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
