@@ -70,8 +70,9 @@ local defaultDebug = {
 }
 local defaultConfig = {
 	Entity = {
-    Attach = nil
-    AudioList = nil
+		Jumpscare=function() end,
+    Attach = nil,
+    AudioList = nil,
 		Name = "Template Entity",
 		Asset = "https://github.com/RegularVynixu/Utilities/blob/main/Doors%20Entity%20Spawner/Models/Rush.rbxm?raw=true",
 		HeightOffset = 0
@@ -443,6 +444,7 @@ function DamagePlayer(entityTable)
 				
 				-- Set death hints and type (thanks oogy)
 				if firesignal then
+					config.Jumpscare()
 					firesignal(remotesFolder.DeathHint.OnClientEvent, config.Death.Hints, colour)
 				else
 					warn("firesignal not supported, ignore death hints.")
