@@ -37,9 +37,9 @@ function quick()
         false, --Crucifix fails?
         "Guiding", --Death type ("Curious" or "Guiding")
         {"You died to who you call Quick", "Listen for any cues that might hint it's arrival", "Find a hiding spot quickly! It's speed has been proved to be quite menacing", ""} --death messages
-        jumpscare=function()
+        function() --jumpscare
         
-    end
+        end
     )
 end
 local entityChances={
