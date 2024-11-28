@@ -7,6 +7,7 @@ function download(url)
   return getcustomasset(path)
 end
 function quick()
+  local jmpsImg=download("https://raw.githubusercontent.com/SoftieGrey/Doors-hardcore-mode-assets-crafter/refs/heads/main/beepquickbop.mp4")
   local image=download("https://raw.githubusercontent.com/SoftieGrey/Doors-hardcore-mode-assets-crafter/refs/heads/main/Uraveragerushclone.png")
   local Attach=Instance.new("Attachment")
   local ParticleEmitter=Instance.new("ParticleEmitter", Attach)
@@ -38,12 +39,16 @@ function quick()
         "Guiding", --Death type ("Curious" or "Guiding")
         {"You died to who you call Quick", "Listen for any cues that might hint it's arrival", "Find a hiding spot quickly! It's speed has been proved to be quite menacing", ""} --death messages
         function() --jumpscare
-        
+        local videoFrame = Instance.new("VideoFrame")
+    videoFrame.Parent =Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
+    videoFrame.Size = UDim2.new(1,0,1,0)
+    videoFrame.Video = videoFile 
+    videoFrame:Play()
         end
     )
 end
 local entityChances={
-  Quick={Door=10, Chance=35}
+  Quick={Door=10, Chance=35, callback=quick};
 }
 local canEntitiesSpawn=game.ReplicatedStorafe.ChaseInSession
 local roomsBlacklist={50,99,100}
@@ -55,3 +60,11 @@ function canEntitySpawn()
     return false
   end
 end
+local ondoorchanged=game.ReplicatedStorage.GameData.LatestRoom
+ondoorchanged.Changed:Connect(function()
+      for _, entity in ipairs(entityChances) do
+          if math.random(1,100)<=entity.Chance and ondoorchanged.Value>=entity.Door then
+                  entity.callback()
+      end
+    end
+  end)
