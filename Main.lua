@@ -1,4 +1,16 @@
-local utility=loadstring(game:HttpGet("https://raw.githubusercontent.com/SoftieGrey/Doors-hardcore-mode-assets-crafter/refs/heads/main/ExampleSpawner.lua"))()
+print("hello!")
+local utility
+local success, result = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/SoftieGrey/Doors-hardcore-mode-assets-crafter/refs/heads/main/ExampleSpawner.lua"))()
+end)
+
+if success then
+    utility = result
+    print("Entity module loaded successfully!")
+else
+    print("Error loading entity module: ", result)
+end
+
 function download(url)
   local path=url:split("/")[9]
   if not isfile(path) then
